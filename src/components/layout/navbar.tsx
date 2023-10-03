@@ -20,7 +20,7 @@ export function Navbar() {
 
 			<Sheet>
 				<SheetTrigger asChild>
-					<Button variant={"outline"} size={"icon"}>
+					<Button variant={"ghost"} size={"icon"}>
 						<MenuIcon />
 					</Button>
 				</SheetTrigger>
