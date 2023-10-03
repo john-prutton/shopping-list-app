@@ -1,7 +1,14 @@
 "use client"
 
-import { MenuIcon } from "lucide-react"
-import { Button } from "./ui/button"
+import { AddIcon, LogOutIcon, MenuIcon } from "@/lib/icons"
+import { Button } from "@/components/ui/button"
+import {
+	Sheet,
+	SheetContent,
+	SheetHeader,
+	SheetTitle,
+	SheetTrigger,
+} from "@/components/ui/sheet"
 
 export function Navbar() {
 	return (
@@ -11,9 +18,30 @@ export function Navbar() {
 				<span className="text-primary">Ease</span>
 			</p>
 
-			<Button variant={"outline"} size={"icon"}>
-				<MenuIcon />
-			</Button>
+			<Sheet>
+				<SheetTrigger asChild>
+					<Button variant={"outline"} size={"icon"}>
+						<MenuIcon />
+					</Button>
+				</SheetTrigger>
+
+				<SheetContent>
+					<SheetHeader>
+						<SheetTitle>Menu</SheetTitle>
+					</SheetHeader>
+					<div className="grid gap-4 py-4">
+						<Button variant={"secondary"}>
+							<AddIcon className="mr-2" size={16} />
+							Create Group
+						</Button>
+
+						<Button variant={"secondary"}>
+							<LogOutIcon className="mr-2" size={16} />
+							Sign Out
+						</Button>
+					</div>
+				</SheetContent>
+			</Sheet>
 		</nav>
 	)
 }
