@@ -12,7 +12,7 @@ import {
 
 export function Navbar() {
 	return (
-		<nav className="flex flex-row justify-between items-center px-4 py-8 w-full bg-card rounded-md h-12 drop-shadow-xl">
+		<nav className="flex flex-row justify-between items-center px-4 py-8 w-full bg-card rounded-md h-12 drop-shadow-xl mb-8">
 			<p className="font-bold text-2xl text-gray-600">
 				Shop
 				<span className="text-primary">Ease</span>

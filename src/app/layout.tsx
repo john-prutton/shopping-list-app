@@ -1,13 +1,12 @@
-import { Navbar } from "@/components/navbar"
 import "./globals.css"
-import type { Metadata } from "next"
-import { Poppins } from "next/font/google"
-import { Toaster } from "@/components/ui/toaster"
 
-const font = Poppins({
-	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-	subsets: ["latin"],
-})
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+
+import { Toaster } from "@/components/ui/toaster"
+import { Navbar } from "@/components/layout/navbar"
+
+const font = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
 	title: "Shopping List App",

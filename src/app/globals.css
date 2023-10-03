@@ -57,3 +57,11 @@
 		@apply bg-background text-foreground;
 	}
 }
+
+h2 {
+	@apply text-xl font-semibold text-gray-600;
+}
+
+main {
+	@apply px-4;
+}
