@@ -2,6 +2,7 @@ import { Navbar } from "@/components/navbar"
 import "./globals.css"
 import type { Metadata } from "next"
 import { Poppins } from "next/font/google"
+import { Toaster } from "@/components/ui/toaster"
 
 const font = Poppins({
 	weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -22,6 +23,7 @@ export default function RootLayout({
 			<body className={font.className + " p-2"}>
 				<Navbar />
 				{children}
+				<Toaster />
 			</body>
 		</html>
 	)
