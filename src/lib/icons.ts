@@ -4,5 +4,6 @@ export {
   LogInIcon as LogInIcon,
   LogOutIcon as LogOutIcon,
   Settings2Icon as EditIcon,
-  UserX2Icon as LeaveIcon
+  UserX2Icon as LeaveIcon,
+  CopyIcon as CopyIcon
 } from "lucide-react"
