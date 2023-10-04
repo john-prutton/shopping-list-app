@@ -5,6 +5,8 @@ import {
   primaryKey,
 } from "drizzle-orm/sqlite-core";
 import type { AdapterAccount } from "@auth/core/adapters";
+import { createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const users = sqliteTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -13,6 +15,10 @@ export const users = sqliteTable("user", {
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
   image: text("image"),
 });
+
+export const selectUserSchema = createSelectSchema(users);
+export const userIdSchema = selectUserSchema.pick({ id: true });
+export type UserId = z.infer<typeof userIdSchema>["id"];
 
 export const accounts = sqliteTable(
   "account",
