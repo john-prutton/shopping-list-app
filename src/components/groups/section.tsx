@@ -4,10 +4,7 @@ import { Section } from "@/components/layout/section"
 import { Button } from "@/components/ui/button"
 
 import { CreateGroupDialog } from "@/components/groups/create-dialog"
-
-export type Group = {
-	name: string
-}
+import { Group } from "@/lib/db/schema/groups"
 
 export function GroupSection({ groups }: { groups: Group[] }) {
 	return (
@@ -19,7 +16,7 @@ export function GroupSection({ groups }: { groups: Group[] }) {
 					variant={"outline"}
 					className="w-full text-xl justify-start font-normal rounded-md"
 				>
-					<Link href={`/groups/${group.name}`}>{group.name}</Link>
+					<Link href={`/groups/${group.id}`}>{group.name}</Link>
 				</Button>
 			))}
 		</Section>
