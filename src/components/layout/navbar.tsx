@@ -10,6 +10,7 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet"
 import Link from "next/link"
+import { AuthButton } from "@/components/auth/AuthButton"
 
 export function Navbar() {
 	return (
@@ -34,6 +35,8 @@ export function Navbar() {
 					</SheetHeader>
 
 					<div className="grid gap-4 py-4">
+						<AuthButton />
+
 						<Button variant={"secondary"}>
 							<AddIcon className="mr-2" size={16} />
 							Create Group
