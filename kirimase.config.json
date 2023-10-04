@@ -1,12 +1,13 @@
 {
   "hasSrc": true,
   "packages": [
-    "drizzle"
+    "drizzle",
+    "next-auth"
   ],
   "preferredPackageManager": "pnpm",
   "rootPath": "src/",
   "driver": "sqlite",
   "provider": "better-sqlite3",
   "orm": "drizzle",
-  "auth": null
+  "auth": "next-auth"
 }

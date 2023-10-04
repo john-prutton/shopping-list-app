@@ -32,6 +32,7 @@ export function Navbar() {
 					<SheetHeader>
 						<SheetTitle>Menu</SheetTitle>
 					</SheetHeader>
+
 					<div className="grid gap-4 py-4">
 						<Button variant={"secondary"}>
 							<AddIcon className="mr-2" size={16} />
