@@ -1,9 +1,18 @@
+"use client"
+
 import { CopyIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
+import type { GroupCode } from "@/lib/db/schema/groups"
 
-export function InviteMembersForm() {
+export function InviteMembersForm({ groupCode }: { groupCode: GroupCode }) {
+	const joinLink = `http://localhost:3000/join/${groupCode}`
+
+	async function copyToClipboard(text: string) {
+		navigator.clipboard.writeText(text)
+	}
+
 	return (
 		<div className="flex flex-col gap-2">
 			<div>
@@ -11,11 +20,15 @@ export function InviteMembersForm() {
 
 				<div className="flex flex-row gap-2">
 					<Input
-						value={"http://shopease.com/join/ab2d3"}
+						value={`http://shopease.com/join/${groupCode}`}
 						contentEditable={false}
 					/>
 
-					<Button size={"icon"} className="aspect-square">
+					<Button
+						onClick={() => copyToClipboard(joinLink)}
+						size={"icon"}
+						className="aspect-square"
+					>
 						<CopyIcon />
 					</Button>
 				</div>
@@ -34,12 +47,16 @@ export function InviteMembersForm() {
 
 				<div className="flex flex-row gap-2">
 					<Input
-						value={"ab2d3".toUpperCase()}
+						value={groupCode}
 						contentEditable={false}
 						className="text-center"
 					/>
 
-					<Button size={"icon"} className="aspect-square">
+					<Button
+						onClick={() => copyToClipboard(groupCode)}
+						size={"icon"}
+						className="aspect-square"
+					>
 						<CopyIcon />
 					</Button>
 				</div>

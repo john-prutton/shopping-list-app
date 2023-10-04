@@ -1,12 +1,21 @@
+"use client"
+
 import { AddIcon } from "@/lib/icons"
 import { ActionDialog } from "../layout/action-dialog"
 import { Section } from "../layout/section"
 import { InviteMembersForm } from "./invite-form"
 
 import type { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
+import type { GroupCode } from "@/lib/db/schema/groups"
 
 type Member = Awaited<ReturnType<typeof getGroupMembers>>[0]
-export function MemberSection({ members }: { members: Member[] }) {
+export function MemberSection({
+	members,
+	groupCode,
+}: {
+	members: Member[]
+	groupCode: GroupCode
+}) {
 	return (
 		<Section
 			classname="mb-4"
@@ -14,7 +23,7 @@ export function MemberSection({ members }: { members: Member[] }) {
 			title="Members"
 			actionButton={
 				<ActionDialog icon={<AddIcon className="text-primary" />}>
-					<InviteMembersForm />
+					<InviteMembersForm groupCode={groupCode.toUpperCase()} />
 				</ActionDialog>
 			}
 		>

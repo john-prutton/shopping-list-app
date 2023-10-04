@@ -47,7 +47,7 @@ export const joinGroup = async (groupCode: GroupCode) => {
   if (!session) return { error: "Unauthorised" }
 
   // Find group by code
-  const { error: groupError, group } = await getGroupByCode(groupCode)
+  const { error: groupError, group } = await getGroupByCode(groupCode.toLowerCase())
 
   if (groupError) return {
     error: groupError
