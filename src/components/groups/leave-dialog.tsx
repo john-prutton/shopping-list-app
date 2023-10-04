@@ -1,8 +1,30 @@
+"use client"
+
+import { useRouter, usePathname } from "next/navigation"
+
 import { LeaveIcon } from "@/lib/icons"
-import { ActionDialog } from "../layout/action-dialog"
-import { Button } from "../ui/button"
+import { ActionDialog } from "@/components/layout/action-dialog"
+import { Button } from "@/components/ui/button"
+import { leaveGroupByGroupId } from "@/lib/api/groups/mutations"
 
 export function LeaveGroupDialog() {
+	const { refresh, push } = useRouter()
+	const pathname = usePathname()
+
+	async function tryLeaveGroup() {
+		const { error } = await leaveGroupByGroupId(+pathname.slice(-1))
+		if (error) {
+			alert(
+				`There was an error while trying to leave the group: ${error}`
+			)
+			return
+		}
+
+		// Otherwise, push user to groups page
+		push("/groups")
+		refresh()
+	}
+
 	return (
 		<ActionDialog icon={<LeaveIcon size={20} className="text-red-400" />}>
 			<div className="flex flex-col gap-2">
@@ -12,15 +34,13 @@ export function LeaveGroupDialog() {
 						Are you sure you want to leave this group?
 					</p>
 
-					<div className="flex flex-row gap-2">
-						<Button variant={"secondary"} className="w-full">
-							Cancel
-						</Button>
-
-						<Button variant={"destructive"} className="w-full">
-							Leave
-						</Button>
-					</div>
+					<Button
+						onClick={tryLeaveGroup}
+						variant={"destructive"}
+						className="w-full"
+					>
+						Leave
+					</Button>
 				</div>
 			</div>
 		</ActionDialog>
