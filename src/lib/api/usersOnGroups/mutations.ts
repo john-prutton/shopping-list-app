@@ -1,3 +1,5 @@
+"use server"
+
 import { db } from "@/lib/db"
 import { UserId } from "@/lib/db/schema/auth"
 import { GroupId } from "@/lib/db/schema/groups"

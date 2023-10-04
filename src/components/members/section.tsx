@@ -3,12 +3,10 @@ import { ActionDialog } from "../layout/action-dialog"
 import { Section } from "../layout/section"
 import { InviteMembersForm } from "./invite-form"
 
-export type User = {
-	username: string
-	color: string
-}
+import type { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
 
-export function MemberSection({ members }: { members: User[] }) {
+type Member = Awaited<ReturnType<typeof getGroupMembers>>[0]
+export function MemberSection({ members }: { members: Member[] }) {
 	return (
 		<Section
 			classname="mb-4"
@@ -26,7 +24,7 @@ export function MemberSection({ members }: { members: User[] }) {
 					style={{ backgroundColor: member.color }}
 					className="w-14 aspect-square text-2xl font-light p-2 rounded-md grid place-content-center"
 				>
-					{member.username.charAt(0)}
+					{member.name.charAt(0)}
 				</div>
 			))}
 		</Section>

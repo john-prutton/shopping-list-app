@@ -2,8 +2,7 @@ import { MemberSection } from "@/components/members/section"
 import { ItemSection } from "@/components/items/section"
 import { LeaveGroupDialog } from "@/components/groups/leave-dialog"
 import { getGroupById } from "@/lib/api/groups/queries"
-
-const generateRandomColor = () => `hsl(${Math.random() * 360}, 45%, 55%)`
+import { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
 
 export default async function GroupViewPage({
 	params: { id },
@@ -14,14 +13,7 @@ export default async function GroupViewPage({
 
 	if (error || !group) return <div>Error: {error}</div>
 
-	const members = [
-		{ username: "Mathew", color: generateRandomColor() },
-		{ username: "John", color: generateRandomColor() },
-	]
-	const items = [
-		{ name: "Brocolli", member: members[0] },
-		{ name: "Butter", member: members[1] },
-	]
+	const members = await getGroupMembers(id)
 
 	return (
 		<main>
@@ -35,7 +27,7 @@ export default async function GroupViewPage({
 
 			<MemberSection members={members} />
 
-			<ItemSection items={items} />
+			{/* <ItemSection items={items} /> */}
 		</main>
 	)
 }

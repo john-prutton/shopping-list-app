@@ -3,7 +3,6 @@
 import { and, eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { NewGroup, insertGroupSchema, groups, groupIdSchema, groupCodeSchema, GroupId, Group, GroupCode } from "@/lib/db/schema/groups";
-import { createGroupCode } from "./utils";
 import { addUserToGroup } from "../usersOnGroups/mutations";
 import { getUserAuth } from "@/lib/auth/utils";
 import { getGroupByCode, getGroupById } from "./queries";
@@ -25,7 +24,7 @@ export const createGroup = async (group: NewGroup) => {
     // Create group
     const [g] = await db.insert(groups).values({
       ...group,
-      code: createGroupCode()
+      code: Date.now().toString(36).slice(-5)
     }).returning();
 
     // Add user to group
