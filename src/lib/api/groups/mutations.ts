@@ -2,10 +2,11 @@
 
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
-import { NewGroup, insertGroupSchema, groups, groupIdSchema, GroupId } from "@/lib/db/schema/groups";
+import { NewGroup, insertGroupSchema, groups, groupIdSchema, groupCodeSchema, GroupId, Group, GroupCode } from "@/lib/db/schema/groups";
 import { createGroupCode } from "./utils";
 import { addUserToGroup } from "../usersOnGroups/mutations";
 import { getUserAuth } from "@/lib/auth/utils";
+import { getGroupByCode } from "./queries";
 
 export const createGroup = async (group: NewGroup) => {
   // Check if user is logged in
@@ -39,6 +40,25 @@ export const createGroup = async (group: NewGroup) => {
     return { error: message };
   }
 };
+
+export const joinGroup = async (groupCode: GroupCode) => {
+  // Check if user is logged in
+  const { session } = await getUserAuth()
+  if (!session) return { error: "Unauthorised" }
+
+  // Find group by code
+  const { error: groupError, group } = await getGroupByCode(groupCode)
+
+  if (groupError) return {
+    error: groupError
+  }
+
+  // Add user to group
+  const { error } = await addUserToGroup(session.user.id, group!.id)
+  if (error) return { error }
+
+  return { group }
+}
 
 export const updateGroup = async (id: GroupId, group: NewGroup) => {
   const { id: groupId } = groupIdSchema.parse({ id });

@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm"
 
 import { db } from "@/lib/db"
-import { groupIdSchema, groups, GroupId } from "@/lib/db/schema/groups"
+import { groupIdSchema, groups, GroupId, GroupCode, groupCodeSchema } from "@/lib/db/schema/groups"
 import { getUserAuth } from "@/lib/auth/utils"
 import { usersOnGroups } from "@/lib/db/schema/users-on-groups"
 
@@ -31,3 +31,16 @@ export const getGroupById = async (id: GroupId) => {
   if (g) return { group: g }
   else return { error: "No group with that id" }
 }
+
+export const getGroupByCode = async (code: GroupCode) => {
+  const { success: isValidGroupCode } = groupCodeSchema.safeParse({ code })
+  if (!isValidGroupCode) return { error: "Invalid group code with type " + typeof code }
+
+  const g = await db.query.groups.findFirst({
+    where: eq(groups.code, code)
+  })
+
+  if (g) return { group: g }
+  else return { error: "No group with that code" }
+}
+

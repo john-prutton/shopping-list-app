@@ -14,8 +14,10 @@ export const insertGroupSchema = createInsertSchema(groups).extend({
 });
 export const selectGroupSchema = createSelectSchema(groups);
 export const groupIdSchema = selectGroupSchema.pick({ id: true });
+export const groupCodeSchema = selectGroupSchema.pick({ code: true });
 export const updateGroupSchema = selectGroupSchema;
 
 export type Group = z.infer<typeof selectGroupSchema>;
 export type NewGroup = z.infer<typeof insertGroupSchema>;
 export type GroupId = z.infer<typeof groupIdSchema>["id"];
+export type GroupCode = z.infer<typeof groupCodeSchema>["code"];
