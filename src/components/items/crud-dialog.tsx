@@ -34,14 +34,24 @@ export function ItemCrudDialog({ initalState }: { initalState?: Item }) {
 
 						<div>
 							<p>Assigned group member</p>
-							<Combobox initialValue={"mathew"} />
+							<Combobox
+								initialValue={initalState?.member.username.toLowerCase()}
+							/>
 						</div>
 
 						<div className="flex flex-row gap-2 mt-4">
-							<Button className="w-full">Save</Button>
-							<Button variant={"secondary"} className="w-full">
-								Cancel
+							<Button className="w-full">
+								{initalState ? "Update" : "Create"}
 							</Button>
+
+							{initalState ? (
+								<Button
+									variant={"destructive"}
+									className="w-full"
+								>
+									Delete
+								</Button>
+							) : null}
 						</div>
 					</div>
 				</div>
