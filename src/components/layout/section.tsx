@@ -5,7 +5,9 @@ export function Section({
 	actionButton,
 	children,
 	classname,
+	orientation = "col",
 }: {
+	orientation?: "row" | "col"
 	classname?: string
 	title: string
 	actionButton: React.ReactNode
@@ -19,7 +21,14 @@ export function Section({
 				{actionButton}
 			</div>
 
-			{children}
+			<div
+				className={cn(
+					"flex gap-2",
+					orientation === "row" ? "flex-row" : "flex-col"
+				)}
+			>
+				{children}
+			</div>
 		</section>
 	)
 }

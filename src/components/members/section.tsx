@@ -12,6 +12,7 @@ export function MemberSection({ members }: { members: User[] }) {
 	return (
 		<Section
 			classname="mb-4"
+			orientation="row"
 			title="Members"
 			actionButton={
 				<ActionDialog icon={<AddIcon className="text-primary" />}>
@@ -19,17 +20,15 @@ export function MemberSection({ members }: { members: User[] }) {
 				</ActionDialog>
 			}
 		>
-			<div className="flex flex-row gap-2">
-				{members.map((member, i) => (
-					<div
-						key={i}
-						style={{ backgroundColor: member.color }}
-						className="w-14 aspect-square text-2xl font-light p-2 rounded-md grid place-content-center"
-					>
-						{member.username.charAt(0)}
-					</div>
-				))}
-			</div>
+			{members.map((member, i) => (
+				<div
+					key={i}
+					style={{ backgroundColor: member.color }}
+					className="w-14 aspect-square text-2xl font-light p-2 rounded-md grid place-content-center"
+				>
+					{member.username.charAt(0)}
+				</div>
+			))}
 		</Section>
 	)
 }
