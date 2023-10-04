@@ -46,3 +46,13 @@ export const getGroupByCode = async (code: GroupCode) => {
   else return { error: "No group with that code" }
 }
 
+export const getGroupCode = async (id: GroupId) => {
+  // Try get group by id
+  const { error, group } = await getGroupById(id)
+
+  if (error) return {
+    error: `There was an error trying to find that group: ${error}`
+  }
+
+  return { code: group!.code }
+}

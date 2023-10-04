@@ -25,7 +25,7 @@ export default async function GroupViewPage({
 				<LeaveGroupDialog />
 			</div>
 
-			<MemberSection members={members} />
+			<MemberSection members={members} groupCode={group.code} />
 
 			{/* <ItemSection items={items} /> */}
 		</main>
