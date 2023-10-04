@@ -19,6 +19,7 @@ export const createGroup = async (group: NewGroup) => {
 
   // Try create group
   try {
+
     // Create group
     const [g] = await db.insert(groups).values({
       ...group,

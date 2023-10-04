@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator"
 import { ActionDialog } from "@/components/layout/action-dialog"
 
 export function CreateGroupDialog() {
-	const { push: redirectTo } = useRouter()
+	const { push: redirectTo, refresh } = useRouter()
 	const groupNameInputRef = useRef<HTMLInputElement | null>(null)
 
 	async function tryCreateGroup() {
@@ -37,6 +37,7 @@ export function CreateGroupDialog() {
 		}
 
 		// Otherwise, redirect to the group
+		refresh()
 		redirectTo(`/groups/${group!.id}`)
 	}
 

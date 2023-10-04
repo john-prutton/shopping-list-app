@@ -1,12 +1,12 @@
 import { GroupSection } from "@/components/groups/section"
-import { getGroups } from "@/lib/api/groups/queries"
+import { getGroupsByUserId } from "@/lib/api/groups/queries"
 
 export default async function Home() {
-	const { groups } = await getGroups()
+	const { groups } = await getGroupsByUserId()
 
 	return (
 		<main>
-			<GroupSection groups={groups} />
+			<GroupSection groups={groups ?? []} />
 		</main>
 	)
 }
