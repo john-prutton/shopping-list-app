@@ -1,18 +1,23 @@
-import { GroupSection } from "@/components/groups/section"
+import { redirect } from "next/navigation"
 
-export default function Home() {
-	const groups = [
-		{
-			name: "test",
-		},
-		{
-			name: "test-2",
-		},
-	]
+import { getUserAuth } from "@/lib/auth/utils"
+
+import { AuthButton } from "@/components/auth/AuthButton"
+import { Logo } from "@/components/layout/logo"
+
+export default async function Home() {
+	const { session } = await getUserAuth()
+	if (session) redirect("/groups")
 
 	return (
 		<main>
-			<GroupSection groups={groups} />
+			<h1 className="text-center">
+				Welcome to <Logo />
+			</h1>
+
+			<div className="grid place-content-center h-[50vh]">
+				<AuthButton />
+			</div>
 		</main>
 	)
 }

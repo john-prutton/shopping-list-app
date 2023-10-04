@@ -5,6 +5,7 @@ import { Inter } from "next/font/google"
 
 import { Toaster } from "@/components/ui/toaster"
 import { Navbar } from "@/components/layout/navbar"
+import NextAuthProvider from "@/lib/auth/Provider"
 
 const font = Inter({ subsets: ["latin"] })
 
@@ -20,8 +21,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={font.className + " p-2"}>
-				<Navbar />
-				{children}
+				<NextAuthProvider>
+					<Navbar />
+					{children}
+				</NextAuthProvider>
 				<Toaster />
 			</body>
 		</html>

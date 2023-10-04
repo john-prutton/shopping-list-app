@@ -1,10 +1,73 @@
+"use client"
+
+import { useRef } from "react"
+import { useRouter } from "next/navigation"
+
+import { createGroup, joinGroup } from "@/lib/api/groups/mutations"
+
 import { AddIcon } from "@/lib/icons"
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { Separator } from "../ui/separator"
-import { ActionDialog } from "../layout/action-dialog"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Separator } from "@/components/ui/separator"
+import { ActionDialog } from "@/components/layout/action-dialog"
 
 export function CreateGroupDialog() {
+	const { push: redirectTo, refresh } = useRouter()
+	const groupNameInputRef = useRef<HTMLInputElement | null>(null)
+	const groupCodeInputRef = useRef<HTMLInputElement | null>(null)
+
+	async function tryCreateGroup() {
+		if (!groupNameInputRef.current) {
+			alert("Error: component didn't render correctly")
+			return
+		}
+
+		const groupName = groupNameInputRef.current.value
+
+		if (groupName === "") {
+			alert("No group name provided")
+			return
+		}
+
+		// Try and create the group in the db
+		const { error, group } = await createGroup({ name: groupName })
+
+		if (error) {
+			alert(`An error occured while creating the group: ${error}`)
+			return
+		}
+
+		// Otherwise, redirect to the group
+		refresh()
+		redirectTo(`/groups/${group!.id}`)
+	}
+
+	async function tryJoinGroup() {
+		if (!groupCodeInputRef.current) {
+			alert("Error: component didn't render correctly")
+			return
+		}
+
+		const groupCode = groupCodeInputRef.current.value
+
+		if (groupCode === "") {
+			alert("No group code provided")
+			return
+		}
+
+		// Try and join the group in the db
+		const { error, group } = await joinGroup(groupCode)
+
+		if (error) {
+			alert(`An error occured while creating the group: ${error}`)
+			return
+		}
+
+		// Otherwise, redirect to the group
+		refresh()
+		redirectTo(`/groups/${group!.id}`)
+	}
+
 	return (
 		<ActionDialog icon={<AddIcon className="text-primary" />}>
 			<div className="flex flex-col gap-2">
@@ -12,9 +75,16 @@ export function CreateGroupDialog() {
 					<p className="mb-2 font-semibold">Create new group</p>
 
 					<div className="flex flex-row gap-2">
-						<Input placeholder="Enter group name..." />
+						<Input
+							ref={groupNameInputRef}
+							placeholder="Enter group name..."
+						/>
 
-						<Button size={"icon"} className="aspect-square">
+						<Button
+							onClick={tryCreateGroup}
+							size={"icon"}
+							className="aspect-square"
+						>
 							<AddIcon />
 						</Button>
 					</div>
@@ -33,11 +103,16 @@ export function CreateGroupDialog() {
 
 					<div className="flex flex-row gap-2">
 						<Input
+							ref={groupCodeInputRef}
 							placeholder="Enter group code..."
 							className="text-center"
 						/>
 
-						<Button size={"icon"} className="aspect-square">
+						<Button
+							onClick={tryJoinGroup}
+							size={"icon"}
+							className="aspect-square"
+						>
 							<AddIcon />
 						</Button>
 					</div>

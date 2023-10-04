@@ -10,15 +10,14 @@ import {
 	SheetTrigger,
 } from "@/components/ui/sheet"
 import Link from "next/link"
+import { AuthButton } from "@/components/auth/AuthButton"
+import { Logo } from "./logo"
 
 export function Navbar() {
 	return (
 		<nav className="flex flex-row justify-between items-center px-4 py-8 w-full bg-card rounded-md h-12 drop-shadow-xl mb-8">
 			<Link href={"/"}>
-				<p className="font-bold text-2xl text-gray-600">
-					Shop
-					<span className="text-primary">Ease</span>
-				</p>
+				<Logo />
 			</Link>
 
 			<Sheet>
@@ -32,7 +31,10 @@ export function Navbar() {
 					<SheetHeader>
 						<SheetTitle>Menu</SheetTitle>
 					</SheetHeader>
+
 					<div className="grid gap-4 py-4">
+						<AuthButton />
+
 						<Button variant={"secondary"}>
 							<AddIcon className="mr-2" size={16} />
 							Create Group

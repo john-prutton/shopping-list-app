@@ -1,12 +1,13 @@
 {
   "hasSrc": true,
   "packages": [
-    "shadcn-ui"
+    "drizzle",
+    "next-auth"
   ],
   "preferredPackageManager": "pnpm",
   "rootPath": "src/",
-  "orm": null,
-  "driver": null,
-  "provider": null,
-  "auth": null
+  "driver": "sqlite",
+  "provider": "better-sqlite3",
+  "orm": "drizzle",
+  "auth": "next-auth"
 }
