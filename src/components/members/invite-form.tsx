@@ -47,7 +47,7 @@ export function InviteMembersForm({ groupCode }: { groupCode: GroupCode }) {
 
 				<div className="flex flex-row gap-2">
 					<Input
-						value={groupCode!.toUpperCase()}
+						value={groupCode}
 						contentEditable={false}
 						className="text-center"
 					/>

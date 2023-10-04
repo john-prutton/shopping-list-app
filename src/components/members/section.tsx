@@ -23,7 +23,7 @@ export function MemberSection({
 			title="Members"
 			actionButton={
 				<ActionDialog icon={<AddIcon className="text-primary" />}>
-					<InviteMembersForm groupCode={groupCode} />
+					<InviteMembersForm groupCode={groupCode.toUpperCase()} />
 				</ActionDialog>
 			}
 		>
