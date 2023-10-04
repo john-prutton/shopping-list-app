@@ -1,14 +1,26 @@
+"use server"
+
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { NewGroup, insertGroupSchema, groups, groupIdSchema, GroupId } from "@/lib/db/schema/groups";
+import { createGroupCode } from "./utils";
 
 export const createGroup = async (group: NewGroup) => {
-  const newGroup = insertGroupSchema.parse(group);
+  const { success: isValidGroup } = insertGroupSchema.safeParse(group);
+  if (!isValidGroup) return {
+    error: "Group not valid"
+  }
+
   try {
-    const [g] = await db.insert(groups).values(newGroup).returning();
+    const [g] = await db.insert(groups).values({
+      ...group,
+      code: createGroupCode()
+    }).returning();
+
     return { group: g }
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
+
     console.error(message);
     return { error: message };
   }

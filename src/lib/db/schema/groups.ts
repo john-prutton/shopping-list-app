@@ -9,7 +9,9 @@ export const groups = sqliteTable("groups", {
 });
 
 // Schema for CRUD - used to validate API requests
-export const insertGroupSchema = createInsertSchema(groups);
+export const insertGroupSchema = createInsertSchema(groups).extend({
+  code: z.string().optional()
+});
 export const selectGroupSchema = createSelectSchema(groups);
 export const groupIdSchema = selectGroupSchema.pick({ id: true });
 export const updateGroupSchema = selectGroupSchema;
