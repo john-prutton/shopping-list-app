@@ -21,7 +21,7 @@ export function MemberSection({ members }: { members: Member[] }) {
 			{members.map((member, i) => (
 				<div
 					key={i}
-					style={{ backgroundColor: "teal" }}
+					style={{ backgroundColor: member.color }}
 					className="w-14 aspect-square text-2xl font-light p-2 rounded-md grid place-content-center"
 				>
 					{member.name.charAt(0)}

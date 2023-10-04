@@ -4,8 +4,6 @@ import { LeaveGroupDialog } from "@/components/groups/leave-dialog"
 import { getGroupById } from "@/lib/api/groups/queries"
 import { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
 
-const generateRandomColor = () => `hsl(${Math.random() * 360}, 45%, 55%)`
-
 export default async function GroupViewPage({
 	params: { id },
 }: {

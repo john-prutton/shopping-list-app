@@ -20,6 +20,7 @@ export const getGroupMembers = async (id: GroupId) => {
 
   return rows.map((row, i) => ({
     id: row.user.id,
-    name: row.user.name
+    name: row.user.name,
+    color: row.color
   }))
 }
