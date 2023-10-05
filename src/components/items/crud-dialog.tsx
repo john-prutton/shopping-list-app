@@ -47,7 +47,7 @@ export function ItemCrudDialog({
 	const updateMember = (v: string) => {
 		const newState = {
 			...state,
-			member: members.find((m) => m.id === v),
+			memberId: v,
 		}
 
 		setState(newState)
@@ -60,7 +60,12 @@ export function ItemCrudDialog({
 		})
 
 	const tryUpdate = async () => {
-		const item = state as Item
+		const item = {
+			id: state.id,
+			groupId: state.groupId,
+			userId: state.memberId,
+			name: state.name,
+		} as Item
 
 		const { error: updateItemError } = await updateItem(item)
 
@@ -153,7 +158,7 @@ export function ItemCrudDialog({
 								label: member.name,
 								value: member.id,
 							}))}
-							value={state?.memberId ?? ""}
+							value={state.memberId ?? ""}
 							setValue={updateMember}
 						/>
 					</div>
