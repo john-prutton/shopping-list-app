@@ -2,11 +2,17 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Combobox } from "../ui/combo-box"
 
-import type { Item } from "./section"
 import { ActionDialog } from "../layout/action-dialog"
 import { AddIcon, EditIcon } from "@/lib/icons"
+import { getItemsByGroup } from "@/lib/api/items/queries"
 
-export function ItemCrudDialog({ initalState }: { initalState?: Item }) {
+export function ItemCrudDialog({
+	initalState,
+}: {
+	initalState?: NonNullable<
+		Awaited<ReturnType<typeof getItemsByGroup>>["items"]
+	>[0]
+}) {
 	return (
 		<ActionDialog
 			icon={
@@ -35,7 +41,7 @@ export function ItemCrudDialog({ initalState }: { initalState?: Item }) {
 						<div>
 							<p>Assigned group member</p>
 							<Combobox
-								initialValue={initalState?.member.username.toLowerCase()}
+								initialValue={initalState?.member?.name.toLowerCase()}
 							/>
 						</div>
 
