@@ -60,12 +60,7 @@ export function ItemCrudDialog({
 		})
 
 	const tryUpdate = async () => {
-		const item = {
-			groupId: +groupId,
-			id: state.id!,
-			name: state.name,
-			userId: state.memberId,
-		} as Item
+		const item = state as Item
 
 		const { error: updateItemError } = await updateItem(item)
 

@@ -45,6 +45,7 @@ export async function ItemSection({ groupId }: { groupId: GroupId }) {
 								<ItemCrudDialog
 									members={members}
 									initalState={{
+										groupId,
 										name: item.name,
 										id: item.id,
 										memberId: item.member?.id,
