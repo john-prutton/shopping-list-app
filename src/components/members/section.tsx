@@ -1,21 +1,14 @@
-"use client"
+import { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
+import type { Group } from "@/lib/db/schema/groups"
 
 import { AddIcon } from "@/lib/icons"
 import { ActionDialog } from "../layout/action-dialog"
 import { Section } from "../layout/section"
 import { InviteMembersForm } from "./invite-form"
 
-import type { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
-import type { GroupCode } from "@/lib/db/schema/groups"
+export async function MemberSection({ group }: { group: Group }) {
+	const members = await getGroupMembers(group.id)
 
-type Member = Awaited<ReturnType<typeof getGroupMembers>>[0]
-export function MemberSection({
-	members,
-	groupCode,
-}: {
-	members: Member[]
-	groupCode: GroupCode
-}) {
 	return (
 		<Section
 			classname="mb-4"
@@ -23,7 +16,7 @@ export function MemberSection({
 			title="Members"
 			actionButton={
 				<ActionDialog icon={<AddIcon className="text-primary" />}>
-					<InviteMembersForm groupCode={groupCode.toUpperCase()} />
+					<InviteMembersForm groupCode={group.code.toUpperCase()} />
 				</ActionDialog>
 			}
 		>

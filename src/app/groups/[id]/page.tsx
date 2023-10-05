@@ -2,7 +2,6 @@ import { MemberSection } from "@/components/members/section"
 import { ItemSection } from "@/components/items/section"
 import { LeaveGroupDialog } from "@/components/groups/leave-dialog"
 import { getGroupById } from "@/lib/api/groups/queries"
-import { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
 
 export default async function GroupViewPage({
 	params: { id },
@@ -12,8 +11,6 @@ export default async function GroupViewPage({
 	const { error, group } = await getGroupById(id)
 
 	if (error || !group) return <div>Error: {error}</div>
-
-	const members = await getGroupMembers(id)
 
 	return (
 		<main>
@@ -25,9 +22,9 @@ export default async function GroupViewPage({
 				<LeaveGroupDialog />
 			</div>
 
-			<MemberSection members={members} groupCode={group.code} />
+			<MemberSection group={group} />
 
-			{/* <ItemSection items={items} /> */}
+			<ItemSection groupId={group.id} />
 		</main>
 	)
 }

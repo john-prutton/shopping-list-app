@@ -18,20 +18,16 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover"
 
-const members = [
-	{
-		value: "mathew",
-		label: "Mathew",
-	},
-	{
-		value: "john",
-		label: "John",
-	},
-]
-
-export function Combobox({ initialValue }: { initialValue?: string }) {
+export function Combobox({
+	value,
+	setValue,
+	options,
+}: {
+	value: string
+	setValue: (v: string) => void
+	options: { label: string; value: string }[]
+}) {
 	const [open, setOpen] = React.useState(false)
-	const [value, setValue] = React.useState(initialValue ?? "")
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
@@ -43,38 +39,47 @@ export function Combobox({ initialValue }: { initialValue?: string }) {
 					className="w-full justify-between"
 				>
 					{value
-						? members.find((member) => member.value === value)
+						? options.find((option) => option.value === value)
 								?.label
-						: "Select member..."}
+						: "Select option..."}
 					<ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
 				</Button>
 			</PopoverTrigger>
+
 			<PopoverContent className="w-full p-0">
 				<Command>
-					<CommandInput placeholder="Search member..." />
-					<CommandEmpty>No member found.</CommandEmpty>
+					<CommandInput placeholder="Search for an option..." />
+					<CommandEmpty>No options found.</CommandEmpty>
 					<CommandGroup>
-						{members.map((member) => (
+						{options.map((option) => (
 							<CommandItem
-								key={member.value}
-								onSelect={(currentValue: string) => {
-									setValue(
-										currentValue === value
-											? ""
-											: currentValue
+								key={option.label}
+								onSelect={(currentLabel: string) => {
+									const currentOption = options.find(
+										(opt) =>
+											opt.label.toLowerCase() ===
+											currentLabel
 									)
+
+									if (
+										!currentOption ||
+										currentOption.value === value
+									)
+										setValue("")
+									else setValue(currentOption.value)
+
 									setOpen(false)
 								}}
 							>
 								<Check
 									className={cn(
 										"mr-2 h-4 w-4",
-										value === member.value
+										value === option.value
 											? "opacity-100"
 											: "opacity-0"
 									)}
 								/>
-								{member.label}
+								{option.label}
 							</CommandItem>
 						))}
 					</CommandGroup>
