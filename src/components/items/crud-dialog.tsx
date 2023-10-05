@@ -3,8 +3,8 @@ import { useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 
 import type { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
-import { NewItem } from "@/lib/db/schema/items"
-import { createItem, deleteItem } from "@/lib/api/items/mutations"
+import { Item, NewItem } from "@/lib/db/schema/items"
+import { createItem, deleteItem, updateItem } from "@/lib/api/items/mutations"
 
 import { AddIcon, EditIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
@@ -19,6 +19,7 @@ export function ItemCrudDialog({
 	members: Awaited<ReturnType<typeof getGroupMembers>>
 	initalState?: {
 		id?: number
+		groupId: number
 		name: string
 		memberId?: string
 	}
@@ -29,6 +30,7 @@ export function ItemCrudDialog({
 	const [state, setState] = useState<NonNullable<typeof initalState>>(
 		initalState ?? {
 			name: "New Item",
+			groupId: +groupId,
 		}
 	)
 
@@ -38,6 +40,7 @@ export function ItemCrudDialog({
 		setState(
 			initalState ?? {
 				name: "New Item",
+				groupId: +groupId,
 			}
 		)
 
@@ -56,8 +59,24 @@ export function ItemCrudDialog({
 			name: v,
 		})
 
-	const tryUpdate = () => {
+	const tryUpdate = async () => {
+		const item = {
+			groupId: +groupId,
+			id: state.id!,
+			name: state.name,
+			userId: state.memberId,
+		} as Item
+
+		const { error: updateItemError } = await updateItem(item)
+
+		if (updateItemError) {
+			alert(`There was an error updating the item: ${updateItemError}`)
+			return
+		}
+
 		setIsOpen(false)
+		resetState()
+		refreshPage()
 	}
 
 	const tryCreate = async () => {
@@ -76,9 +95,9 @@ export function ItemCrudDialog({
 			return
 		}
 
-		refreshPage()
 		setIsOpen(false)
 		resetState()
+		refreshPage()
 	}
 
 	const tryDelete = async () => {
@@ -91,8 +110,8 @@ export function ItemCrudDialog({
 			return
 		}
 
-		resetState()
 		setIsOpen(false)
+		resetState()
 		refreshPage()
 	}
 
