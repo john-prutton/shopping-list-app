@@ -9,7 +9,7 @@ export const items = sqliteTable("items", {
   id: integer("id").primaryKey(),
   name: text("name").notNull(),
   userId: text("user_id").references(() => users.id, { onDelete: "set null" }),
-  groupId: integer("group_id").notNull().references(() => groups.id)
+  groupId: integer("group_id").notNull().references(() => groups.id, { onDelete: "cascade" })
 });
 
 export const itemsRelations = relations(items, ({ one, many }) => ({

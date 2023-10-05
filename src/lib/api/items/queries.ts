@@ -19,13 +19,19 @@ export async function getItemsByGroup(groupId: GroupId) {
     }
   })
 
+  console.log(`Items found with group id ${groupId}: ${items.length}`)
+
   if (items.length === 0) return { items: [] }
 
   // Get unique userIds
   const userIds = new Set<string>()
   items.forEach((item) => { if (item.userId) userIds.add(item.userId) })
 
-  if (userIds.size === 0) return { items: [] }
+  if (userIds.size === 0) return {
+    items: items.map((item) => ({
+      name: item.name
+    }))
+  }
 
   // Get user colors
   const results = await db.query.usersOnGroups.findMany({
