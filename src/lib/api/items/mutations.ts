@@ -96,7 +96,10 @@ export const updateItem = async (item: Item) => {
 
   // Finally update the item
   try {
-    const [updatedItem] = await db.update(items).set(item).where(eq(items.id, item.id)).returning()
+    const [updatedItem] = await db
+      .update(items)
+      .set({ groupId: item.groupId, name: item.name, userId: item.userId })
+      .where(eq(items.id, item.id)).returning()
     return { item: updatedItem }
   } catch (err) {
     return { error: `There was an error updating the item: ${err}` }

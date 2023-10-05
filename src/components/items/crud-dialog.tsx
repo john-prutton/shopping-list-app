@@ -47,7 +47,7 @@ export function ItemCrudDialog({
 	const updateMember = (v: string) => {
 		const newState = {
 			...state,
-			memberId: v,
+			memberId: v === "" ? undefined : v,
 		}
 
 		setState(newState)
