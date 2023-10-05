@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation"
 
 import type { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
 import { NewItem } from "@/lib/db/schema/items"
-import { createItem } from "@/lib/api/items/mutations"
+import { createItem, deleteItem } from "@/lib/api/items/mutations"
 
 import { AddIcon, EditIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
@@ -81,8 +81,19 @@ export function ItemCrudDialog({
 		resetState()
 	}
 
-	const tryDelete = () => {
+	const tryDelete = async () => {
+		const { error: itemDeleteError } = await deleteItem(state.id!, +groupId)
+
+		if (itemDeleteError) {
+			alert(
+				`There was an error while deleting the item: ${itemDeleteError}`
+			)
+			return
+		}
+
+		resetState()
 		setIsOpen(false)
+		refreshPage()
 	}
 
 	const handlePrematureClose = (b: boolean) => {
