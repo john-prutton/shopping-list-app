@@ -2,9 +2,10 @@
 
 import { db } from "@/lib/db"
 import { UserId } from "@/lib/db/schema/auth"
-import { GroupId } from "@/lib/db/schema/groups"
+import type { GroupCode, GroupId } from "@/lib/db/schema/groups"
 import { usersOnGroups } from "@/lib/db/schema/users-on-groups"
 import { and, eq } from "drizzle-orm"
+import { getGroupByCode } from "../groups/queries"
 
 export async function addUserToGroup(userId: UserId, groupId: GroupId) {
   // First check if user is in group
@@ -30,4 +31,19 @@ export async function addUserToGroup(userId: UserId, groupId: GroupId) {
       error: `There was an error adding user to group: ${err}`
     }
   }
+}
+
+
+export async function addUserToGroupByCode(userId: UserId, groupCode: GroupCode) {
+  const { error: getGroupError, group } = await getGroupByCode(groupCode)
+  if (getGroupError) return {
+    error: `There was an error while trying to get group by code: ${getGroupError}`
+  }
+
+  const { error: addUserToGroupError } = await addUserToGroup(userId, group!.id)
+  if (addUserToGroupError) return {
+    error: `There was an error adding the user to the group: ${addUserToGroupError}`
+  }
+
+  return { group: group }
 }
