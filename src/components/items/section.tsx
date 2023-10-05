@@ -2,8 +2,10 @@ import { getItemsByGroup } from "@/lib/api/items/queries"
 import { Section } from "../layout/section"
 import { ItemCrudDialog } from "./crud-dialog"
 import { GroupId } from "@/lib/db/schema/groups"
+import { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
 
 export async function ItemSection({ groupId }: { groupId: GroupId }) {
+	const members = await getGroupMembers(groupId)
 	const { error: getItemsError, items } = await getItemsByGroup(groupId)
 
 	if (getItemsError)
@@ -15,7 +17,10 @@ export async function ItemSection({ groupId }: { groupId: GroupId }) {
 		)
 	else
 		return (
-			<Section title="Items" actionButton={<ItemCrudDialog />}>
+			<Section
+				title="Items"
+				actionButton={<ItemCrudDialog members={members} />}
+			>
 				{!items || items.length === 0 ? (
 					<p className="text-center">No items yet!</p>
 				) : (
@@ -37,7 +42,10 @@ export async function ItemSection({ groupId }: { groupId: GroupId }) {
 
 								<p className="mr-auto">{item.name}</p>
 
-								<ItemCrudDialog initalState={item} />
+								<ItemCrudDialog
+									members={members}
+									initalState={item}
+								/>
 							</div>
 						</div>
 					))

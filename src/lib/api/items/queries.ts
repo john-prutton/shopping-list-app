@@ -3,7 +3,17 @@
 import { db } from "@/lib/db";
 import type { GroupId } from "@/lib/db/schema/groups";
 
-export async function getItemsByGroup(groupId: GroupId) {
+export async function getItemsByGroup(groupId: GroupId): Promise<{
+  items?: {
+    id: number,
+    name: string,
+    member?: {
+      id: string,
+      name: string,
+      color: string
+    }
+  }[], error?: string
+}> {
   // Get all items in a group
   const items = await db.query.items.findMany({
     where: (item, { eq }) => {
@@ -29,6 +39,7 @@ export async function getItemsByGroup(groupId: GroupId) {
 
   if (userIds.size === 0) return {
     items: items.map((item) => ({
+      id: item.id,
       name: item.name
     }))
   }
@@ -56,12 +67,14 @@ export async function getItemsByGroup(groupId: GroupId) {
   results.forEach(({ userId, color }) => userColors.set(userId, color))
 
   const itemsWithDetails = items.map((item) => ({
+    id: item.id,
     name: item.name,
     ...item.userId &&
     {
       member: {
+        id: item.userId,
         name: item.user!.name,
-        color: userColors.get(item.userId)
+        color: userColors.get(item.userId)!
       }
     }
   }))

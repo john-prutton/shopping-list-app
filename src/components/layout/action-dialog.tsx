@@ -6,12 +6,16 @@ import { Button } from "@/components/ui/button"
 export function ActionDialog({
 	icon,
 	children,
+	isOpen,
+	onOpenChange,
 }: {
 	icon: React.ReactNode
 	children: React.ReactNode
+	isOpen?: boolean
+	onOpenChange?: (b: boolean) => void
 }) {
 	return (
-		<Dialog>
+		<Dialog open={isOpen} onOpenChange={onOpenChange}>
 			<DialogTrigger asChild>
 				<Button variant={"ghost"} size={"icon"}>
 					{icon}
