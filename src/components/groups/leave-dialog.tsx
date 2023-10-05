@@ -9,10 +9,10 @@ import { leaveGroupByGroupId } from "@/lib/api/groups/mutations"
 
 export function LeaveGroupDialog() {
 	const { refresh, push } = useRouter()
-	const pathname = usePathname()
+	const groupId = +usePathname().slice(1 + usePathname().lastIndexOf("/"))
 
 	async function tryLeaveGroup() {
-		const { error } = await leaveGroupByGroupId(+pathname.slice(-1))
+		const { error } = await leaveGroupByGroupId(groupId)
 		if (error) {
 			alert(
 				`There was an error while trying to leave the group: ${error}`
