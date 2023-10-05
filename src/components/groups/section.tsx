@@ -1,15 +1,17 @@
 import Link from "next/link"
 
+import { getGroupsByUserId } from "@/lib/api/groups/queries"
+
+import { CreateGroupDialog } from "@/components/groups/create-dialog"
 import { Section } from "@/components/layout/section"
 import { Button } from "@/components/ui/button"
 
-import { CreateGroupDialog } from "@/components/groups/create-dialog"
-import { Group } from "@/lib/db/schema/groups"
+export async function GroupSection() {
+	const { groups } = await getGroupsByUserId()
 
-export function GroupSection({ groups }: { groups: Group[] }) {
 	return (
 		<Section title="Groups" actionButton={<CreateGroupDialog />}>
-			{groups.length === 0 ? (
+			{!groups || groups.length === 0 ? (
 				<p className="text-center">You're not in any groups yet.</p>
 			) : (
 				groups.map((group, i) => (
