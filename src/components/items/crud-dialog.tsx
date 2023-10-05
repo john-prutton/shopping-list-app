@@ -1,13 +1,16 @@
 "use client"
+import { useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
 
+import type { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
+import { NewItem } from "@/lib/db/schema/items"
+import { createItem } from "@/lib/api/items/mutations"
+
+import { AddIcon, EditIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Combobox } from "../ui/combo-box"
-
-import { ActionDialog } from "../layout/action-dialog"
-import { AddIcon, EditIcon } from "@/lib/icons"
-import type { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
-import { useState } from "react"
+import { Combobox } from "@/components/ui/combo-box"
+import { ActionDialog } from "@/components/layout/action-dialog"
 
 export function ItemCrudDialog({
 	initalState,
@@ -17,9 +20,12 @@ export function ItemCrudDialog({
 	initalState?: {
 		id?: number
 		name: string
-		member?: { id: string; name: string; color: string }
+		memberId?: string
 	}
 }) {
+	const { refresh: refreshPage } = useRouter()
+	const groupId = usePathname().slice(1 + usePathname().lastIndexOf("/"))
+
 	const [state, setState] = useState<NonNullable<typeof initalState>>(
 		initalState ?? {
 			name: "New Item",
@@ -27,6 +33,13 @@ export function ItemCrudDialog({
 	)
 
 	const [isOpen, setIsOpen] = useState(false)
+
+	const resetState = () =>
+		setState(
+			initalState ?? {
+				name: "New Item",
+			}
+		)
 
 	const updateMember = (v: string) => {
 		const newState = {
@@ -47,8 +60,25 @@ export function ItemCrudDialog({
 		setIsOpen(false)
 	}
 
-	const tryCreate = () => {
+	const tryCreate = async () => {
+		const newItem = {
+			groupId: +groupId,
+			name: state.name,
+			userId: state.memberId,
+		} as NewItem
+
+		const { error: createItemError } = await createItem(newItem)
+
+		if (createItemError) {
+			alert(
+				`There was an error while creating the item: ${createItemError}`
+			)
+			return
+		}
+
+		refreshPage()
 		setIsOpen(false)
+		resetState()
 	}
 
 	const tryDelete = () => {
@@ -58,12 +88,7 @@ export function ItemCrudDialog({
 	const handlePrematureClose = (b: boolean) => {
 		const isClosing = !b
 
-		if (isClosing)
-			setState(
-				initalState ?? {
-					name: "New Item",
-				}
-			)
+		if (isClosing) resetState()
 
 		setIsOpen(b)
 	}
@@ -103,7 +128,7 @@ export function ItemCrudDialog({
 								label: member.name,
 								value: member.id,
 							}))}
-							value={state?.member?.id ?? ""}
+							value={state?.memberId ?? ""}
 							setValue={updateMember}
 						/>
 					</div>

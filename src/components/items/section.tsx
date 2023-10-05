@@ -44,7 +44,11 @@ export async function ItemSection({ groupId }: { groupId: GroupId }) {
 
 								<ItemCrudDialog
 									members={members}
-									initalState={item}
+									initalState={{
+										name: item.name,
+										id: item.id,
+										memberId: item.member?.id,
+									}}
 								/>
 							</div>
 						</div>
