@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator"
 import type { GroupCode } from "@/lib/db/schema/groups"
 
 export function InviteMembersForm({ groupCode }: { groupCode: GroupCode }) {
-	const joinLink = `http://localhost:3000/join/${groupCode}`
+	const joinLink = `${process.env.NEXT_PUBLIC_BASE_URL}/join/${groupCode}`
 
 	async function copyToClipboard(text: string) {
 		navigator.clipboard.writeText(text)
@@ -19,10 +19,7 @@ export function InviteMembersForm({ groupCode }: { groupCode: GroupCode }) {
 				<p className="mb-2 font-semibold">Invite by link</p>
 
 				<div className="flex flex-row gap-2">
-					<Input
-						value={`http://shopease.com/join/${groupCode}`}
-						contentEditable={false}
-					/>
+					<Input value={joinLink} contentEditable={false} />
 
 					<Button
 						onClick={() => copyToClipboard(joinLink)}
