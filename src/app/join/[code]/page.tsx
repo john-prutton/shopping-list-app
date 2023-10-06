@@ -17,7 +17,7 @@ export default async function JoinGroupPage({
 	if (session) {
 		const { error, group } = await addUserToGroupByCode(
 			session.user.id,
-			code
+			code.toLowerCase()
 		)
 
 		if (error)
