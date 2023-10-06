@@ -88,9 +88,9 @@ devDependencies:
   autoprefixer:
     specifier: ^10
     version: 10.4.16(postcss@8.4.31)
-  dotenv:
-    specifier: ^16.3.1
-    version: 16.3.1
+  dotenv-flow:
+    specifier: ^4.0.0
+    version: 4.0.0
   drizzle-kit:
     specifier: ^0.19.13
     version: 0.19.13
@@ -1925,6 +1925,13 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       esutils: 2.0.3
+    dev: true
+
+  /dotenv-flow@4.0.0:
+    resolution: {integrity: sha512-AzPaV3wNy14qLbaN/S70VHxiJaz3mI/r8mm6oD+6lPmq3qJFBw2+MUBXWujUujQ5PqtRa9v/hEWBEePSWlTRGg==}
+    engines: {node: '>= 12.0.0'}
+    dependencies:
+      dotenv: 16.3.1
     dev: true
 
   /dotenv@16.3.1:
