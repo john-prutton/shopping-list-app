@@ -5,7 +5,6 @@ import { eq } from "drizzle-orm"
 import { getUserAuth } from "@/lib/auth/utils"
 import { db } from "@/lib/db"
 import { items, type Item, type NewItem } from "@/lib/db/schema/items"
-import type { GroupId } from "@/lib/db/schema/groups"
 
 
 export const createItem = async (newItem: NewItem) => {
