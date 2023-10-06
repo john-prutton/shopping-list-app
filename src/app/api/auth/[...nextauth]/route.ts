@@ -4,6 +4,7 @@ import { DefaultSession, NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import { env } from "@/lib/env.mjs"
 import GithubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
 
 declare module "next-auth" {
   interface Session {
@@ -14,6 +15,8 @@ declare module "next-auth" {
 }
 
 export const authOptions: NextAuthOptions = {
+  debug: true,
+  // @ts-expect-error
   adapter: DrizzleAdapter(db),
   callbacks: {
     session: ({ session, user }) => {
@@ -22,9 +25,13 @@ export const authOptions: NextAuthOptions = {
     },
   },
   providers: [
-     GithubProvider({
+    GithubProvider({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,
+    }),
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET
     })
   ],
 };
