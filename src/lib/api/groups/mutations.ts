@@ -84,7 +84,7 @@ export const deleteGroup = async (id: GroupId) => {
   try {
     const res = await db.delete(groups).where(eq(groups.id, id!))
 
-    return (res.changes === 1) ? { success: true } : { error: "Random error occured when deleting the group." }
+    return (res.rowsAffected === 1) ? { success: true } : { error: "Random error occured when deleting the group." }
 
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again"

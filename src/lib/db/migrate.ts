@@ -1,8 +1,8 @@
 import { env } from "@/lib/env.mjs";
-  
-import { BetterSQLite3Database, drizzle } from "drizzle-orm/better-sqlite3";
-import { migrate } from "drizzle-orm/better-sqlite3/migrator";
-import Database from 'better-sqlite3';
+
+import { drizzle } from "drizzle-orm/libsql";
+import { migrate } from "drizzle-orm/libsql/migrator";
+import { createClient } from '@libsql/client';
 
 
 const runMigrate = async () => {
@@ -10,9 +10,9 @@ const runMigrate = async () => {
     throw new Error("DATABASE_URL is not defined");
   }
 
-  
-const sqlite = new Database('sqlite.db');
-const db: BetterSQLite3Database = drizzle(sqlite);
+
+  const sqlite = createClient({ url: env.DATABASE_URL, authToken: env.DATABASE_AUTH_TOKEN });
+  const db = drizzle(sqlite);
 
 
   console.log("⏳ Running migrations...");

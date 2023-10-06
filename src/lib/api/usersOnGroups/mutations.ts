@@ -22,8 +22,8 @@ export async function addUserToGroup(userId: UserId, groupId: GroupId) {
   // Try and add user to group
   try {
     const res = await db.insert(usersOnGroups).values({ groupId, userId })
-    if (res.changes === 1) return { success: true }
-    else return { error: `An error occured and ${res.changes} users were added to the group` }
+    if (res.rowsAffected === 1) return { success: true }
+    else return { error: `An error occured and ${res.rowsAffected} users were added to the group` }
 
   } catch (err) {
     console.log(`Error adding user to group: ${err}`)
