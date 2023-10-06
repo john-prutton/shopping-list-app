@@ -7,6 +7,7 @@ import { addUserToGroup } from "../usersOnGroups/mutations";
 import { getUserAuth } from "@/lib/auth/utils";
 import { getGroupByCode, getGroupById } from "./queries";
 import { usersOnGroups } from "@/lib/db/schema/users-on-groups";
+import { items } from "@/lib/db/schema/items";
 
 export const createGroup = async (group: NewGroup) => {
   // Check if user is logged in
@@ -120,6 +121,38 @@ export const leaveGroupByGroupId = async (id: GroupId) => {
   } catch (err) {
     console.log(`Error removing user: ${err}`)
     return { error: `There was an error removing the user from the group: ${err}` }
+  }
+
+  // Remove them from any items they were assigned to
+  try {
+    // Find all items the user is assigned to,
+    // in this group
+    const userItems = await db.query.items.findMany({
+      where(item, { and, eq }) {
+        return and(
+          eq(item.userId, session.user.id),
+          eq(item.groupId, group!.id)
+        )
+      },
+    })
+
+    if (userItems.length === 0) return { success: true }
+
+    // Update all items to have no userId
+    userItems.forEach(async (item) => {
+      const [updatedItem] = await db
+        .update(items)
+        .set({ ...item, userId: null })
+        .where(eq(items.id, item.id))
+        .returning()
+
+      if (!updatedItem || updatedItem.userId !== null) {
+        return { error: `Failed to update item with id ${item.id}` }
+      }
+    })
+  } catch (err) {
+    console.log(`Error removing user from items: ${err}`)
+    return { error: `There was an error removing the user from items: ${err}` }
   }
 
   // Check if there are no members in the group
