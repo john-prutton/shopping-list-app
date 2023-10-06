@@ -21,7 +21,7 @@ export function ItemCrudDialog({
 		id?: number
 		groupId: number
 		name: string
-		memberId?: string
+		memberId?: string | null
 	}
 }) {
 	const { refresh: refreshPage } = useRouter()
@@ -47,7 +47,7 @@ export function ItemCrudDialog({
 	const updateMember = (v: string) => {
 		const newState = {
 			...state,
-			memberId: v === "" ? undefined : v,
+			memberId: v === "" ? null : v,
 		}
 
 		setState(newState)
@@ -75,7 +75,6 @@ export function ItemCrudDialog({
 		}
 
 		setIsOpen(false)
-		resetState()
 		refreshPage()
 	}
 
