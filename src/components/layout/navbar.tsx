@@ -1,4 +1,4 @@
-"use client"
+import Link from "next/link"
 
 import { MenuIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
@@ -9,9 +9,9 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet"
-import Link from "next/link"
 import { AuthButton } from "@/components/auth/AuthButton"
-import { Logo } from "./logo"
+import { Logo } from "@/components/layout/logo"
+import { Profile } from "@/components/profile"
 
 export function Navbar() {
 	return (
@@ -33,6 +33,7 @@ export function Navbar() {
 					</SheetHeader>
 
 					<div className="grid gap-4 py-4">
+						<Profile />
 						<AuthButton />
 					</div>
 				</SheetContent>
