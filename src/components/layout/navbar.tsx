@@ -11,8 +11,7 @@ import {
 } from "@/components/ui/sheet"
 import { AuthButton } from "@/components/auth/AuthButton"
 import { Logo } from "@/components/layout/logo"
-import { getUserAuth } from "@/lib/auth/utils"
-import Image from "next/image"
+import { Profile } from "@/components/profile"
 
 export function Navbar() {
 	return (
@@ -40,23 +39,5 @@ export function Navbar() {
 				</SheetContent>
 			</Sheet>
 		</nav>
-	)
-}
-
-async function Profile() {
-	const { session } = await getUserAuth()
-
-	if (!session) return null
-
-	return (
-		<div>
-			<Image
-				src={session.user.image ?? ""}
-				alt="User's profile image"
-				width={96}
-				height={96}
-				className="mx-auto rounded-md"
-			/>
-		</div>
 	)
 }
