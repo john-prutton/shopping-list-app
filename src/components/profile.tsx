@@ -14,7 +14,7 @@ export async function Profile() {
 		)
 
 	return (
-		<div className="grid grid-cols-2">
+		<div className="flex flex-row gap-2">
 			<Image
 				src={profilePicture ?? ""}
 				alt="User's profile image"
@@ -23,7 +23,7 @@ export async function Profile() {
 				className="mx-auto rounded-md"
 			/>
 
-			<div>
+			<div className="w-full">
 				<p className="font-semibold mb-1">{userName}</p>
 
 				<p>

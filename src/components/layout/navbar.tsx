@@ -29,11 +29,10 @@ export function Navbar() {
 
 				<SheetContent>
 					<SheetHeader>
-						<SheetTitle>Menu</SheetTitle>
+						<Profile />
 					</SheetHeader>
 
 					<div className="grid gap-4 py-4">
-						<Profile />
 						<AuthButton />
 					</div>
 				</SheetContent>
