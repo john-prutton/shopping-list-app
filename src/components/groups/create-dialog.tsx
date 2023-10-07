@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 
 import { createGroup, joinGroup } from "@/lib/api/groups/mutations"
 
-import { AddGroupIcon, AddIcon } from "@/lib/icons"
+import { AddGroupIcon, AddIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"

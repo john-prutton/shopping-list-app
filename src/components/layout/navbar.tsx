@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { MenuIcon } from "@/lib/icons"
+import { MenuIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import {
 	Sheet,

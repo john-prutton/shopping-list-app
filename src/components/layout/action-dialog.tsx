@@ -1,4 +1,4 @@
-import { AddIcon } from "@/lib/icons"
+import { AddIcon } from "@/components/icons"
 
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"

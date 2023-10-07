@@ -6,7 +6,7 @@ import type { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
 import { Item, NewItem } from "@/lib/db/schema/items"
 import { createItem, deleteItem, updateItem } from "@/lib/api/items/mutations"
 
-import { AddItemIcon, EditItemIcon } from "@/lib/icons"
+import { AddItemIcon, EditItemIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Combobox } from "@/components/ui/combo-box"

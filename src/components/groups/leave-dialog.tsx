@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation"
 
-import { LeaveGroupIcon, LeaveIcon } from "@/lib/icons"
+import { LeaveGroupIcon, LeaveIcon } from "@/components/icons"
 import { ActionDialog } from "@/components/layout/action-dialog"
 import { Button } from "@/components/ui/button"
 import { leaveGroupByGroupId } from "@/lib/api/groups/mutations"
