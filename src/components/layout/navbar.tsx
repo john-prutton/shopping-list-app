@@ -1,4 +1,4 @@
-"use client"
+import Link from "next/link"
 
 import { MenuIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
@@ -9,9 +9,10 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet"
-import Link from "next/link"
 import { AuthButton } from "@/components/auth/AuthButton"
-import { Logo } from "./logo"
+import { Logo } from "@/components/layout/logo"
+import { getUserAuth } from "@/lib/auth/utils"
+import Image from "next/image"
 
 export function Navbar() {
 	return (
@@ -33,10 +34,29 @@ export function Navbar() {
 					</SheetHeader>
 
 					<div className="grid gap-4 py-4">
+						<Profile />
 						<AuthButton />
 					</div>
 				</SheetContent>
 			</Sheet>
 		</nav>
+	)
+}
+
+async function Profile() {
+	const { session } = await getUserAuth()
+
+	if (!session) return null
+
+	return (
+		<div>
+			<Image
+				src={session.user.image ?? ""}
+				alt="User's profile image"
+				width={96}
+				height={96}
+				className="mx-auto rounded-md"
+			/>
+		</div>
 	)
 }
