@@ -23,7 +23,7 @@ export async function Profile() {
 				className="mx-auto rounded-md"
 			/>
 
-			<div className="w-full">
+			<div className="w-full text-start">
 				<p className="font-semibold mb-1">{userName}</p>
 
 				<p>

@@ -1,42 +1,70 @@
 import Link from "next/link"
+import Image from "next/image"
 
-import { MenuIcon } from "@/components/icons"
-import { Button } from "@/components/ui/button"
-import {
-	Sheet,
-	SheetContent,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet"
+import { getProfileData } from "@/lib/api/profile-data/queries"
+import { getUserAuth } from "@/lib/auth/utils"
+
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { AuthButton } from "@/components/auth/AuthButton"
 import { Logo } from "@/components/layout/logo"
 import { Profile } from "@/components/profile"
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover"
 
-export function Navbar() {
+export async function Navbar() {
+	const { session } = await getUserAuth()
+	const { error: getProfileDataError, profilePicture } =
+		await getProfileData()
+
 	return (
 		<nav className="flex flex-row justify-between items-center px-4 py-8 w-full bg-card rounded-md h-12 drop-shadow-xl mb-8">
 			<Link href={"/"}>
 				<Logo />
 			</Link>
 
-			<Sheet>
-				<SheetTrigger asChild>
-					<Button variant={"ghost"} size={"icon"}>
-						<MenuIcon />
-					</Button>
-				</SheetTrigger>
+			{session && !getProfileDataError ? (
+				<>
+					<Sheet>
+						<SheetTrigger className="sm:hidden">
+							<Image
+								src={profilePicture!}
+								alt="User's profile picture"
+								width={48}
+								height={48}
+								className="rounded-full"
+							/>
+						</SheetTrigger>
 
-				<SheetContent>
-					<SheetHeader>
-						<Profile />
-					</SheetHeader>
+						<SheetContent>
+							<Profile />
+							<AuthButton className="mt-2 w-full" />
+						</SheetContent>
+					</Sheet>
 
-					<div className="grid gap-4 py-4">
-						<AuthButton />
-					</div>
-				</SheetContent>
-			</Sheet>
+					<Popover>
+						<PopoverTrigger className="hidden sm:block">
+							<Image
+								src={profilePicture!}
+								alt="User's profile picture"
+								width={48}
+								height={48}
+								className="rounded-full"
+							/>
+						</PopoverTrigger>
+						<PopoverContent>
+							<>
+								<Profile />
+								<AuthButton className="mt-2 w-full" />
+							</>
+						</PopoverContent>
+					</Popover>
+				</>
+			) : (
+				<AuthButton />
+			)}
 		</nav>
 	)
 }
