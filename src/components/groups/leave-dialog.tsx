@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation"
 
-import { LeaveIcon } from "@/lib/icons"
+import { LeaveGroupIcon, LeaveIcon } from "@/lib/icons"
 import { ActionDialog } from "@/components/layout/action-dialog"
 import { Button } from "@/components/ui/button"
 import { leaveGroupByGroupId } from "@/lib/api/groups/mutations"
@@ -26,7 +26,9 @@ export function LeaveGroupDialog() {
 	}
 
 	return (
-		<ActionDialog icon={<LeaveIcon size={20} className="text-red-400" />}>
+		<ActionDialog
+			icon={<LeaveGroupIcon size={20} className="text-red-400" />}
+		>
 			<div className="flex flex-col gap-2">
 				<div>
 					<p className="mb-2 font-semibold">Leave Group</p>

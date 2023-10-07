@@ -6,7 +6,7 @@ import type { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
 import { Item, NewItem } from "@/lib/db/schema/items"
 import { createItem, deleteItem, updateItem } from "@/lib/api/items/mutations"
 
-import { AddIcon, EditIcon } from "@/lib/icons"
+import { AddItemIcon, EditItemIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Combobox } from "@/components/ui/combo-box"
@@ -128,9 +128,9 @@ export function ItemCrudDialog({
 			onOpenChange={handlePrematureClose}
 			icon={
 				initalState ? (
-					<EditIcon size={20} className="text-gray-500" />
+					<EditItemIcon size={20} className="text-gray-500" />
 				) : (
-					<AddIcon className="text-primary" />
+					<AddItemIcon className="text-primary" />
 				)
 			}
 		>

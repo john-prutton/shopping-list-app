@@ -1,7 +1,7 @@
 import { getGroupMembers } from "@/lib/api/usersOnGroups/queries"
 import type { Group } from "@/lib/db/schema/groups"
 
-import { AddIcon } from "@/lib/icons"
+import { AddUserIcon } from "@/lib/icons"
 import { ActionDialog } from "../layout/action-dialog"
 import { Section } from "../layout/section"
 import { InviteMembersForm } from "./invite-form"
@@ -15,7 +15,7 @@ export async function MemberSection({ group }: { group: Group }) {
 			orientation="row"
 			title="Members"
 			actionButton={
-				<ActionDialog icon={<AddIcon className="text-primary" />}>
+				<ActionDialog icon={<AddUserIcon className="text-primary" />}>
 					<InviteMembersForm groupCode={group.code.toUpperCase()} />
 				</ActionDialog>
 			}

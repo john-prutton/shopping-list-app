@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 
 import { createGroup, joinGroup } from "@/lib/api/groups/mutations"
 
-import { AddIcon } from "@/lib/icons"
+import { AddGroupIcon, AddIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
@@ -69,7 +69,7 @@ export function CreateGroupDialog() {
 	}
 
 	return (
-		<ActionDialog icon={<AddIcon className="text-primary" />}>
+		<ActionDialog icon={<AddGroupIcon className="text-primary" />}>
 			<div className="flex flex-col gap-2">
 				<div>
 					<p className="mb-2 font-semibold">Create new group</p>
