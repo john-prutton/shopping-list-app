@@ -1,6 +1,6 @@
 "use client"
 
-import { AddIcon, LogOutIcon, MenuIcon } from "@/lib/icons"
+import { MenuIcon } from "@/lib/icons"
 import { Button } from "@/components/ui/button"
 import {
 	Sheet,
@@ -34,16 +34,6 @@ export function Navbar() {
 
 					<div className="grid gap-4 py-4">
 						<AuthButton />
-
-						<Button variant={"secondary"}>
-							<AddIcon className="mr-2" size={16} />
-							Create Group
-						</Button>
-
-						<Button variant={"secondary"}>
-							<LogOutIcon className="mr-2" size={16} />
-							Sign Out
-						</Button>
 					</div>
 				</SheetContent>
 			</Sheet>
