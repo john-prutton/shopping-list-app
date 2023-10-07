@@ -21,19 +21,15 @@ export async function GroupSection() {
 						key={i}
 						variant={"secondary"}
 						size={"lg"}
+						asChild
 						className="shadow-md w-full text-xl flex-row justify-between font-normal rounded-md p-8"
 					>
-						<>
-							<Link
-								href={`/groups/${group.id}`}
-								className="font-semibold"
-							>
-								{group.name}
-							</Link>
+						<Link href={`/groups/${group.id}`}>
+							<p className="font-semibold">{group.name}</p>
 							<p className="text-sm">
 								{group.items.length} items
 							</p>
-						</>
+						</Link>
 					</Button>
 				))
 			)}
