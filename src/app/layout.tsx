@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className={font.className + " p-2"}>
+			<body className={font.className + " p-2 max-w-lg mx-auto"}>
 				<NextAuthProvider>
 					<Navbar />
 					{children}
