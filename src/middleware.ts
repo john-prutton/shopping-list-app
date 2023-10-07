@@ -10,9 +10,14 @@ import { NextResponse } from "next/server"
  */
 export default withAuth(
   async function middleware(req) {
-    const sessionToken = req
-      .cookies
-      .get("next-auth.session-token")?.value
+    const sessionToken =
+      req
+        .cookies
+        .get("next-auth.session-token")?.value
+      ||
+      req
+        .cookies
+        .get("__Secure-next-auth.session-token")?.value
 
     const isAuth = !!sessionToken
 
