@@ -12,7 +12,9 @@ export async function GroupSection() {
 	return (
 		<Section title="Groups" actionButton={<CreateGroupDialog />}>
 			{!groups || groups.length === 0 ? (
-				<p className="text-center">You're not in any groups yet.</p>
+				<p className="text-center">
+					You&apos;re not in any groups yet.
+				</p>
 			) : (
 				groups.map((group, i) => (
 					<Button

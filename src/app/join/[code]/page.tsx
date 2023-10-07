@@ -47,7 +47,8 @@ export default async function JoinGroupPage({
 		return (
 			<main>
 				<h2 className="text-center mb-8">
-					Sign in to join a group using code "{code.toUpperCase()}"
+					Sign in to join a group using code &quot;
+					{code.toUpperCase()}&quot;
 				</h2>
 				<div className="grid place-items-center">
 					<AuthButton />

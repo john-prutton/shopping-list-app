@@ -19,6 +19,7 @@ declare module "next-auth" {
 export const authOptions: NextAuthOptions = {
   debug: true,
   adapter: {
+    // @ts-expect-error
     ...DrizzleAdapter(db),
     async getUserByAccount(providerAccountId) {
       const results = await db
