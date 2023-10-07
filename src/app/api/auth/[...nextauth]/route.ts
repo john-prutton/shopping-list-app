@@ -5,6 +5,8 @@ import NextAuth from "next-auth/next";
 import { env } from "@/lib/env.mjs"
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import { accounts, users } from "@/lib/db/schema/auth";
+import { and, eq } from "drizzle-orm";
 
 declare module "next-auth" {
   interface Session {
@@ -16,8 +18,24 @@ declare module "next-auth" {
 
 export const authOptions: NextAuthOptions = {
   debug: true,
-  // @ts-expect-error
-  adapter: DrizzleAdapter(db),
+  adapter: {
+    ...DrizzleAdapter(db),
+    async getUserByAccount(providerAccountId) {
+      const results = await db
+        .select()
+        .from(accounts)
+        .leftJoin(users, eq(users.id, accounts.userId))
+        .where(
+          and(
+            eq(accounts.provider, providerAccountId.provider),
+            eq(accounts.providerAccountId, providerAccountId.providerAccountId),
+          ),
+        )
+        .get();
+
+      return results?.user ?? null;
+    },
+  },
   callbacks: {
     session: ({ session, user }) => {
       session.user.id = user.id;
