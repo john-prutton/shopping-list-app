@@ -19,11 +19,21 @@ export async function GroupSection() {
 				groups.map((group, i) => (
 					<Button
 						key={i}
-						asChild
-						variant={"outline"}
-						className="w-full text-xl justify-start font-normal rounded-md"
+						variant={"secondary"}
+						size={"lg"}
+						className="shadow-md w-full text-xl flex-row justify-between font-normal rounded-md p-8"
 					>
-						<Link href={`/groups/${group.id}`}>{group.name}</Link>
+						<>
+							<Link
+								href={`/groups/${group.id}`}
+								className="font-semibold"
+							>
+								{group.name}
+							</Link>
+							<p className="text-sm">
+								{group.items.length} items
+							</p>
+						</>
 					</Button>
 				))
 			)}

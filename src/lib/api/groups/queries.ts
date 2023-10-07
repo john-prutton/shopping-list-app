@@ -15,7 +15,11 @@ export const getGroupsByUserId = async () => {
   const r = await db.query.usersOnGroups.findMany({
     where: eq(usersOnGroups.userId, session.user.id),
     with: {
-      group: true
+      group: {
+        with: {
+          items: true
+        }
+      }
     }
   })
 
@@ -27,8 +31,9 @@ export const getGroupById = async (id: GroupId) => {
   if (!isValidGroupId) return { error: "Invalid group id" }
 
   const g = await db.query.groups.findFirst({
-    where: eq(groups.id, id)
+    where: eq(groups.id, id),
   })
+
 
   if (g) return { group: g }
   else return { error: "No group with that id" }
