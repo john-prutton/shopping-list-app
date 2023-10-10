@@ -22,7 +22,7 @@ export default async function ShoppingListPage() {
 
 	const allItems = groups
 		.map((group) => group.items)
-		.reduce((pv, v) => ({ ...pv, ...v }))
+		.reduce((pv, v) => pv.concat(v))
 
 	if (allItems.length === 0)
 		return (
@@ -40,7 +40,7 @@ export default async function ShoppingListPage() {
 		<div>
 			{assignedItems.length > 0 ? (
 				<>
-					<h2>Assigned Items</h2>
+					<h2>My Items</h2>
 					<div className="flex flex-col gap-2 my-4">
 						{assignedItems.map((item, i) => (
 							<ItemCard
