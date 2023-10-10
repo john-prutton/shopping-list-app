@@ -9,7 +9,7 @@ export default async function ShoppingListPage() {
 	if (getGroupsError || !groups)
 		return (
 			<p className="text-center">
-				There was an error fetching groups: "{getGroupsError}"
+				There was an error fetching groups: &quot;{getGroupsError}&quot;
 			</p>
 		)
 
