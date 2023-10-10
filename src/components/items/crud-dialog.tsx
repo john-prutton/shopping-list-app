@@ -100,7 +100,7 @@ export function ItemCrudDialog({
 	}
 
 	const tryDelete = async () => {
-		const { error: itemDeleteError } = await deleteItem(state.id!, +groupId)
+		const { error: itemDeleteError } = await deleteItem(state.id!)
 
 		if (itemDeleteError) {
 			alert(
