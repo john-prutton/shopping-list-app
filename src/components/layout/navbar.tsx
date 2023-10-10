@@ -13,6 +13,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover"
+import { Button } from "@/components/ui/button"
 
 export async function Navbar() {
 	const { session } = await getUserAuth()
@@ -39,8 +40,7 @@ export async function Navbar() {
 						</SheetTrigger>
 
 						<SheetContent>
-							<Profile />
-							<AuthButton className="mt-2 w-full" />
+							<NavContent />
 						</SheetContent>
 					</Sheet>
 
@@ -54,11 +54,8 @@ export async function Navbar() {
 								className="rounded-full"
 							/>
 						</PopoverTrigger>
-						<PopoverContent>
-							<>
-								<Profile />
-								<AuthButton className="mt-2 w-full" />
-							</>
+						<PopoverContent asChild>
+							<NavContent />
 						</PopoverContent>
 					</Popover>
 				</>
@@ -66,5 +63,17 @@ export async function Navbar() {
 				<AuthButton />
 			)}
 		</nav>
+	)
+}
+
+function NavContent() {
+	return (
+		<div className="flex flex-col gap-2">
+			<Profile />
+			<AuthButton />
+			<Button asChild>
+				<Link href={"/shopping-list"}>Create Shopping List</Link>
+			</Button>
+		</div>
 	)
 }
