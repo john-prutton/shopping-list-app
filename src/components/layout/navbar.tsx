@@ -4,7 +4,6 @@ import Image from "next/image"
 import { getProfileData } from "@/lib/api/profile-data/queries"
 import { getUserAuth } from "@/lib/auth/utils"
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { AuthButton } from "@/components/auth/AuthButton"
 import { Logo } from "@/components/layout/logo"
 import { Profile } from "@/components/profile"
@@ -27,38 +26,20 @@ export async function Navbar() {
 			</Link>
 
 			{session && !getProfileDataError ? (
-				<>
-					<Sheet>
-						<SheetTrigger className="sm:hidden">
-							<Image
-								src={profilePicture!}
-								alt="User's profile picture"
-								width={48}
-								height={48}
-								className="rounded-full"
-							/>
-						</SheetTrigger>
-
-						<SheetContent>
-							<NavContent />
-						</SheetContent>
-					</Sheet>
-
-					<Popover>
-						<PopoverTrigger className="hidden sm:block">
-							<Image
-								src={profilePicture!}
-								alt="User's profile picture"
-								width={48}
-								height={48}
-								className="rounded-full"
-							/>
-						</PopoverTrigger>
-						<PopoverContent asChild>
-							<NavContent />
-						</PopoverContent>
-					</Popover>
-				</>
+				<Popover>
+					<PopoverTrigger>
+						<Image
+							src={profilePicture!}
+							alt="User's profile picture"
+							width={48}
+							height={48}
+							className="rounded-full"
+						/>
+					</PopoverTrigger>
+					<PopoverContent asChild>
+						<NavContent />
+					</PopoverContent>
+				</Popover>
 			) : (
 				<AuthButton />
 			)}
